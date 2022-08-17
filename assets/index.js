@@ -68,6 +68,17 @@ const firstFetch = () => {
 };
 
 $(document).ready(function () {
+  // Search on enter key press
+  $("#searchInput").keyup(
+    delay(function (e) {
+      if (!this.value) {
+        firstFetch();
+      } else {
+        search(this.value);
+      }
+    }, 500)
+  );
+
   // First fetch
   firstFetch();
 });
@@ -87,4 +98,20 @@ const nextPageClick = () => {
       },
     });
   }
+};
+
+const search = (searchTerm) => {
+  let endpoint = `https://rickandmortyapi.com/api/character/?name=${searchTerm}`;
+  $.ajax({
+    url: endpoint,
+    contentType: "application/json",
+    dataType: "json",
+    success: function (result) {
+      handleAPIResponse(result, true);
+    },
+    error: function (error) {
+      console.log(error);
+      handleError();
+    },
+  });
 };
