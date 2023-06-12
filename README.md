@@ -1,1 +1,1 @@
-# code-exercise-finishline
+# Rick and morty API
